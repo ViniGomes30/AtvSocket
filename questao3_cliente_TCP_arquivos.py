@@ -1,15 +1,7 @@
-"""
-QUESTÃO 3 – Chat TCP com Transferência de Arquivos: Cliente
-Menu de opções:
-    1. Enviar mensagem de texto
-    2. Transferir arquivo para o servidor
-    3. Sair (QUIT)
-"""
-
 import socket
 import os
 
-HOST = "127.0.0.1"  # IP do servidor
+HOST = "127.0.0.1"
 PORTA = 55555
 
 
@@ -43,15 +35,12 @@ def enviar_arquivo(sock, caminho_arquivo):
     nome_arquivo = os.path.basename(caminho_arquivo)
     tamanho = os.path.getsize(caminho_arquivo)
 
-    # Envia comando de envio de arquivo
     sock.sendall(f"SEND:{nome_arquivo}".encode("utf-8"))
 
-    # Aguarda confirmação e envia tamanho
     import time
     time.sleep(0.1)
     sock.sendall(tamanho.to_bytes(8, byteorder="big"))
 
-    # Aguarda servidor confirmar que está pronto
     confirmacao = sock.recv(6)
     if confirmacao != b"PRONTO":
         print("[ERRO] Servidor não confirmou recebimento.")
@@ -65,7 +54,6 @@ def enviar_arquivo(sock, caminho_arquivo):
                 break
             sock.sendall(chunk)
 
-    # Aguarda confirmação final
     resposta = sock.recv(10)
     if resposta == b"OK_ARQUIVO":
         print(f"[CLIENTE] Arquivo '{nome_arquivo}' enviado com sucesso!")
@@ -91,7 +79,6 @@ def main():
         print("[ERRO] Servidor não encontrado. Certifique-se de que o servidor está rodando.")
         return
 
-    # Mensagem de boas-vindas do servidor
     boas_vindas = sock.recv(1024).decode("utf-8")
     print(f"\n{boas_vindas}\n")
 
