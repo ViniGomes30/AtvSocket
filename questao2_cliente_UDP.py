@@ -1,15 +1,8 @@
-"""
-QUESTÃO 2 – Chat UDP: Cliente
-Substitua PORTA pelos primeiros 5 dígitos do seu TIA.
-Ex: TIA 12345678 → porta 12345
-"""
-
 import socket
 
-# ⚠️ SUBSTITUA pelo seu TIA (primeiros 5 números)
 TIA_PORTA = 10425
 
-HOST = "127.0.0.1"  # IP do servidor (localhost para teste local)
+HOST = "127.0.0.1" 
 PORTA = TIA_PORTA
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -25,7 +18,6 @@ while True:
         print("[CLIENTE] Encerrando o chat.")
         break
 
-    # Aguarda resposta do servidor
     dados, _ = sock.recvfrom(4096)
     resposta = dados.decode("utf-8")
     print(f"[SERVIDOR]: {resposta}")
