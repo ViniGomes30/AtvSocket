@@ -1,11 +1,3 @@
-"""
-QUESTÃO 3 – Chat TCP com Transferência de Arquivos: Servidor
-Protocolo: o cliente pode enviar mensagens de texto OU transferir arquivos.
-Comandos especiais (enviados pelo cliente):
-    QUIT           → encerra a conexão
-    SEND:<nome>    → inicia transferência de arquivo
-"""
-
 import socket
 import os
 
@@ -20,12 +12,10 @@ def receber_arquivo(conn, nome_arquivo):
     """Recebe um arquivo do cliente via socket TCP."""
     caminho = os.path.join(PASTA_RECEBIDOS, nome_arquivo)
 
-    # Recebe tamanho do arquivo
     tamanho_bytes = conn.recv(8)
     tamanho = int.from_bytes(tamanho_bytes, byteorder="big")
     print(f"[SERVIDOR] Recebendo arquivo '{nome_arquivo}' ({tamanho} bytes)...")
 
-    # Confirma que está pronto para receber
     conn.sendall(b"PRONTO")
 
     recebido = 0
